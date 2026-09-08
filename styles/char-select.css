@@ -1,0 +1,297 @@
+.kombatZone { 
+    display: flex; 
+    height: 80vh; 
+    align-items: center; 
+    justify-content: space-around; 
+    padding: 20px; 
+}
+
+.charStance {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#spriteCola {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    background: url('../pictures/char-bg.png') no-repeat center bottom;
+    background-size: contain;
+}
+
+#spriteFanta {
+    max-width: 100%;
+    width: 320px;
+    height: auto;
+    image-rendering: pixelated;
+    z-index: 2;
+}
+#stageFloor {
+    position: absolute;
+    bottom: 170px;      
+    left: 50%;
+    
+    /* 
+       Added + 30px inside the calc() to offset the centering 
+       and shift the entire scaled stage 30px to the right.
+    */
+    transform: translateX(calc(-50% + 40px)) scale(3.5); 
+    
+    width: 100%;        
+    max-width: 400px;   
+    height: auto;
+    z-index: 1;         
+    pointer-events: none; 
+    image-rendering: pixelated; 
+}
+
+.controlPanel {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #333;
+    border-radius: 4px;
+}
+
+.controlGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.wasdLayout {
+    display: grid;
+    grid-template-columns: repeat(3, 30px);
+    gap: 2px;
+}
+
+.key {
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--mk-gold);
+    color: #fff;
+    font-size: 11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.key.empty { visibility: hidden; }
+.enterKey { width: 70px; }
+
+.controlPanel .wasdText {
+    font-size: 0.8rem;
+    text-shadow: 1px 1px 0px #000, 2px 2px 0px #000;
+}
+
+.charGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 120px);
+    gap: 15px;
+    padding: 20px;
+    background: rgba(255, 0, 0, 0.1);
+    border: 4px solid #555;
+    transition: box-shadow 0.3s ease;
+}
+
+.charGrid.glowing {
+    box-shadow: 0 0 30px var(--mk-red);
+    border-color: var(--mk-red);
+}
+
+.slot {
+    width: 100px;
+    height: 120px;
+    background: #222;
+    border: 2px solid #444;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.slot[data-char="0"] { background-image: url('../pictures/port_0.png'); }
+.slot[data-char="1"] { background-image: url('../pictures/port_1.png'); }
+.slot[data-char="2"] { background-image: url('../pictures/port_2.png'); }
+.slot[data-char="3"] { background-image: url('../pictures/port_3.png'); }
+.slot[data-char="4"] { background-image: url('../pictures/port_4.png'); }
+.slot[data-char="5"] { background-image: url('../pictures/port_5.png'); }
+.slot[data-char="6"] { background-image: url('../pictures/port_6.png'); }
+.slot[data-char="7"] { background-image: url('../pictures/port_7.png'); }
+.slot[data-char="8"] { background-image: url('../pictures/port_8.png'); }
+
+.slot:not(.muteSlot) {
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+}
+
+.slot:not(.active):not(.locked) {
+    filter: grayscale(0.4);
+    opacity: 0.8;
+}
+
+.slot.active {
+    filter: grayscale(0);
+    opacity: 1;
+}
+
+.slot.locked {
+    animation: strobe 0.1s infinite;
+    z-index: 10;
+}
+
+.muteSlot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--mk-gold);
+}
+
+.muteSlot.active {
+    background: var(--mk-red);
+    box-shadow: 0 0 20px var(--mk-red);
+}
+
+.videoPreview {
+    position: relative;
+    width: 30%;
+    height: auto;
+}
+
+.videoPreview .fullScreen {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 17vw; 
+    overflow: hidden;
+    border: 2px solid var(--mk-gold);
+    background: #000;
+}
+
+.fullScreen #videoContainer {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#portfolioVideo { 
+    width: 100%; 
+    border: 2px solid var(--mk-gold); 
+}
+
+.video-controls-fallback {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+#darken {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    z-index: 1500;
+    transition: background 0.6s ease;
+}
+
+#darken.active {
+    background: rgba(0, 0, 0, 0.92);
+    pointer-events: auto;
+}
+
+body.scroll-locked .fullScreen {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    width: 80vw;
+    height: 45vw;
+    overflow: hidden;
+    z-index: 5000;
+}
+
+.videoPreview .descriptionForChange {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    color: #fff;
+    padding: 40px;
+    box-sizing: border-box;
+    border-top: 3px solid var(--mk-red);
+    overflow-y: auto;
+    opacity: 1;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fullScreen.shifted-up #videoContainer,
+.fullScreen.shifted-up .descriptionForChange {
+    transform: translateY(-100%);
+}
+
+.fullScreen .descriptionForChange p,
+#descriptionInChange {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    letter-spacing: 1px;
+}
+
+.fullScreenControls {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 2005; 
+}
+
+#videoContainer.show + .fullScreenControls,
+body.scroll-locked .fullScreenControls {
+    display: block;
+    z-index: 5100;
+}
+
+.buttGroup {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    pointer-events: auto;
+}
+
+.buttLeft { left: 4vw; top: 50%; transform: translateY(-50%); }
+.buttRight { right: 4vw; top: 50%; transform: translateY(-50%); }
+.buttBottom { bottom: 5vh; left: 50%; transform: translateX(-50%); }
+
+.escKey { width: 45px; height: 35px; }
+.spaceKey { width: 180px; height: 35px; }
+
+#videoContainer.show ~ .fullScreenControls + .video-controls-fallback {
+    display: none;
+}
+
+@keyframes strobe {
+    0%, 49% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; }
+    50%, 100% { border-color: #ffffff; box-shadow: 0 0 20px #ffffff; }
+}

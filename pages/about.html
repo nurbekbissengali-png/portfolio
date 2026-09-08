@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK3 Portfolio - About</title>
+    <link rel="stylesheet" href="../styles/fonts.css">
+    <link rel="stylesheet" href="../styles/gates.css">
+    <link rel="stylesheet" href="../styles/nav.css">
+    <link rel="stylesheet" href="../styles/char-select.css">
+    <link rel="stylesheet" href="../styles/pages.css">
+</head>
+<body>
+    <div class="bGround"></div>
+    <div class="slot muteSlot SecondaryMute" id="muteButt" style="
+        position: fixed; 
+        top: 20px; 
+        right: 20px; 
+        z-index: 2000; 
+        width: 50px; 
+        height: 50px; 
+        border-radius: 50%;">
+        <span id="mutePic">🔊</span>
+    </div>
+    <div id="clickForMusic" class="musicClick">CLICK ANYWHERE FOR MUSIC :)</div>
+    <div id="gateClose" class="gateAnimation" style="display: none;">
+        <div class="gate gateTop"></div>
+        <div class="gate gateBottom"></div>
+        <audio id="boom" src="../pictures/explosion.mp3"></audio>
+    </div>
+    <header>
+        <h1 class="titlus">MY PORTFOLIO</h1>
+    </header>
+
+    <nav class="navig">
+        <a href="#" onclick="animateExitAndGo(event, '../portfolio.html#bypass')">MAIN PAGE</a>
+        <a href="#" onclick="animateExitAndGo(event, '../portfolio.html#bypass-gallery')">GALLERY</a>
+        <a href="contact.html">CONTACT</a>
+        <a href="about.html">ABOUT</a>
+    </nav>
+    <section id="about" class="aboutSection" style="max-width: 800px; margin: 80px auto; padding: 40px; background: rgba(0, 0, 0, 0.85); border: 2px solid #333; border-radius: 4px;">
+        <h2 class="sectionTitlus" style="color: var(--mk-gold); margin-bottom: 40px; font-size: 3.5rem;">WARRIOR PROFILE</h2>
+        <div class="aboutContent">
+            <p style="margin-bottom: 25px;">
+                Welcome to my realm. I am a 3D animator and digital creator dedicated to pushing the technical boundaries of spatial movement, keyframe manipulation, and physical prop interactions. 
+            </p>
+            <p style="margin-bottom: 25px;">
+                This portfolio represents a relentless journey through digital design, blending tactical choreography with arcade-inspired, retro responsive environments. Every frame, lighting profile, and muscle micro-reaction within these projects was handcrafted from scratch to deliver high-impact visual storytelling.
+            </p>
+            <p style="margin-bottom: 40px;">
+                Whether executing dynamic aerial physics setups or technical first-person weapon manipulation loops, my mission remains the same: total domination over the digital craft.
+            </p>
+            <div class="skrillex">
+                <div>
+                    <span class="arsenali">ARSENAL:</span>
+                    <span class="desAns">Source 2 Filmmaker (S2FM), Blender, Premiere Pro</span>
+                </div>
+                <div>
+                    <span class="arsenali">SPECIALTIES:</span>
+                    <span class="desAns">3D Motion, Weight Dynamics, Tactical Realism</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <audio id="charMusic" src="../pictures/about.mp3" loop></audio>
+    <script src="../script.js"></script>
+    <script>
+        window.addEventListener('scroll', () => {
+            const scroll = window.pageYOffset;
+            const bg = document.querySelector('.bGround');
+            if (bg) bg.style.transform = `translateY(-${scroll * 0.3}px)`;
+        });
+    </script>
+</body>
+</html>

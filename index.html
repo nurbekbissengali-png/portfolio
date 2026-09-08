@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurbek Bissengali Portfolio Project</title>
+    <link rel="stylesheet" href="styles/fonts.css">
+    <link rel="stylesheet" href="styles/gates.css">
+    <link rel="stylesheet" href="styles/nav.css">
+    <link rel="stylesheet" href="styles/char-select.css">
+    <link rel="stylesheet" href="styles/gallery.css">
+    <link rel="stylesheet" href="styles/pages.css">
+    <script>
+        if (window.location.hash.includes('bypass')) {
+            const style = document.createElement('style');
+            style.id = "bypassShield"; 
+            style.innerHTML = `
+                #gateClose { 
+                    display: block !important; 
+                    background: #000000 !important; 
+                }
+                #gateClose .gateTop, 
+                #gateClose .gateBottom { 
+                    transform: translateY(0) !important; 
+                    transition: none !important; 
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
+</head>
+<body>
+    <div id="gateClose">
+        <div id="clickToEnter" onclick="triggerSlam()">
+            <h1 class="clickText">CLICK TO ENTER</h1>
+        </div>
+        <div class="gate gateTop"></div>
+        <div class="gate gateBottom">
+            <div class="gateButtons">
+                <button onclick="startGame()" class="butt">START</button>
+                <a href="pages/about.html" class="butt">ABOUT</a>
+            </div>
+        </div>
+        <audio id="boom" src="pictures/explosion.mp3"></audio>
+        <audio id="charMusic" src="pictures/CharacterSelect.mp3" loop></audio>
+</div>
+    <div class="bGround"></div>
+    <div id="darken"></div>
+    <header>
+        <h1 class="titlus">MY PORTFOLIO</h1>
+    </header>
+    <nav class="navig">
+        <a href="portfolio.html#main">MAIN PAGE</a>
+        <a href="portfolio.html#gallery">GALLERY</a>
+        <a href="pages/contact.html">CONTACT</a>
+        <a href="pages/about.html">ABOUT</a>
+    </nav>
+    <section id="main" class="kombatZone">
+        <div class="charStance">
+            <div id="spriteCola">
+                <img id="spriteFanta" src="pictures/char_0_idle.gif" class="visible">
+                <img id="stageFloor" src="pictures/podium.png" alt="Stage Floor">
+            </div>
+            <div class="controlPanel">
+                <div class="controlGroup wasd">
+                    <div class="wasdLayout">
+                        <div class="key empty"></div><div class="key">W</div><div class="key empty"></div>
+                        <div class="key">A</div><div class="key">S</div><div class="key">D</div>
+                    </div>
+                    <span class="wasdText">NAVIGATE</span>
+                </div>
+                <div class="controlGroup">
+                    <div class="key enterKey">ENTER</div>
+                    <span class="wasdText">CHOOSE</span>
+                </div>
+            </div>
+        </div>
+        <div class="charGrid">
+            <div class="slot active" data-index="0" data-char="0"></div>
+            <div class="slot" data-index="1" data-char="1"></div>
+            <div class="slot" data-index="2" data-char="2"></div>
+            <div class="slot" data-index="3" data-char="3"></div>
+            <div class="slot" data-index="4" data-char="4"></div>
+            <div class="slot" data-index="5" data-char="5"></div>
+            <div class="slot" data-index="6" data-char="6"></div>
+            <div class="slot" data-index="7" data-char="7"></div>
+            <div class="slot" data-index="8" data-char="8"></div>
+            <div class="slot muteSlot" id="muteButt" style="grid-column: 2;">
+                <span id="mutePic">🔊</span>
+            </div>
+        </div>
+        <audio id="pluplupluSound" src="pictures/chosen.mp3"></audio>
+        <audio id="plipSound" src="pictures/choose.mp3" preload="auto"></audio>
+        <div class="videoPreview">
+            <div class="fullScreen">
+                <div id="videoContainer">
+                    <video id="portfolioVideo" loop playsinline src="pictures/video0.mp4"></video>
+                </div>
+                <div class="descriptionForChange">
+                    <p id="descriptionInChange">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Choose a warrior.</p>
+                </div>
+            </div>
+            <div class="fullScreenControls">
+                <div class="buttGroup buttLeft">
+                    <div class="key escKey">ESC</div>
+                    <span class="wasdText">BACK</span>
+                </div>
+                <div class="buttGroup buttRight">
+                    <div class="wasdLayout">
+                        <div class="key empty"></div><div class="key empty"></div><div class="key empty"></div>
+                        <div class="key empty"></div><div class="key">S</div><div class="key empty"></div>
+                    </div>
+                    <span class="wasdText" id="videoInfo">INFO</span>
+                    <span class="wasdText" id="infoHide" style="display: none; color: var(--mk-gold);">W - HIDE INFO</span>
+                </div>
+                <div class="buttGroup buttBottom">
+                    <div class="key spaceKey">SPACEBAR</div>
+                    <span class="wasdText">PLAY / PAUSE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallerySection">
+        <h2 class="titlus centerusTitlus">CHOOSE YOUR DESTINY</h2>
+        <div class="galleryContainer" id="galleryVideos"></div>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>

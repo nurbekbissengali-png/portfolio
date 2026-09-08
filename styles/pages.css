@@ -1,0 +1,200 @@
+.contactSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 33px;
+    margin-bottom: 100px;
+}
+
+.contactSection .sectionTitlus {
+    text-align: center;
+    display: block;
+    font-size: 4.5rem; 
+    margin-bottom: 20px; 
+    width: 100%;
+}
+.sectionTitlus{
+    margin-top:0px;
+}
+
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.contactForm input,
+.contactForm textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #555;
+    color: #fff;
+    padding: 15px;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contactForm input:focus,
+.contactForm textarea:focus {
+    border-color: var(--mk-red);
+    box-shadow: 0 0 15px var(--mk-red);
+}
+
+.contactForm textarea {
+    height: 180px;
+    resize: none;
+}
+
+.contactForm button[type="submit"] {
+    align-self: center;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 3.5rem;
+    color: #b0b0b0;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease, color 0.3s ease;
+    
+    font-family: 'MK3Title', sans-serif !important;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 
+        1px 1px 0px #000,
+        2px 2px 0px #000,
+        3px 3px 0px #000,
+        4px 4px 8px rgba(0, 0, 0, 0.8);
+}
+
+.contactForm button[type="submit"]:hover {
+    color: #fff;
+    transform: scale(1.08);
+}
+
+.aboutSection {
+    text-align: center;
+    padding: 60px 20px;
+}
+.aboutContent{
+    text-align: left; 
+    font-size: 1.3rem; 
+    line-height: 1.8; 
+    color: #e0e0e0; 
+    letter-spacing: 1px;
+}
+.skrillex{
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; padding: 20px; 
+    background: rgba(255, 0, 0, 0.05); 
+    border: 1px solid var(--mk-red); 
+    border-radius: 4px;
+}
+.arsenali{
+    color: var(--mk-gold); 
+    display: block; 
+    font-family: 'MK3Title', sans-serif; 
+    font-size: 1.2rem; 
+    margin-bottom: 5px;
+}
+.desAns{
+    font-size: 1.1rem; 
+    color: #fff;
+}
+.SecondaryMute {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: 2px solid var(--mk-gold) !important;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.SecondaryMute:hover {
+    transform: scale(1.1);
+    background: var(--mk-red) !important;
+    box-shadow: 0 0 15px var(--mk-red);
+}
+
+.musicClick {
+    position: fixed;
+    top: 300px; 
+    right: 350px; 
+    z-index: 1900;
+    font-family: 'MK3Title', sans-serif !important;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: var(--mk-gold);
+    transform: rotate(35deg);
+    pointer-events: none !important; 
+    transform-origin: center center;
+    animation: temporary-pulse 1.2s ease-in-out 2;
+    text-shadow: 
+        1px 1px 0px #000,
+        2px 2px 0px #000,
+        3px 3px 0px #000,
+        4px 4px 8px rgba(0, 0, 0, 0.9);
+}
+
+@keyframes temporary-pulse {
+    0% {
+        transform: rotate(35deg) scale(1);
+        color: var(--mk-gold);
+    }
+    50% {
+        transform: rotate(35deg) scale(1.15);
+        color: #fff;
+        text-shadow: 0 0 10px var(--mk-gold);
+    }
+    100% {
+        transform: rotate(35deg) scale(1);
+        color: var(--mk-gold);
+    }
+}
+
+.contactData {
+    width: fit-content;
+    min-width: 320px; 
+    background: rgba(255, 0, 0, 0.05);
+    border: 1px solid var(--mk-red);
+    border-radius: 4px;
+    padding: 15px 25px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px; 
+}
+
+.meta-row {
+    display: flex;
+    gap: 40px; 
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.question {
+    font-family: 'MK3Title', sans-serif !important;
+    color: var(--mk-gold);
+    font-size: 0.95rem;
+    text-shadow: 1px 1px 0px #000;
+}
+
+.answer {
+    color: #ffffff;
+    font-family: 'MK3Secondary', sans-serif;
+}

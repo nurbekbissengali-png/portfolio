@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK3 Portfolio - Contact</title>
+    <link rel="stylesheet" href="../styles/fonts.css">
+    <link rel="stylesheet" href="../styles/nav.css">
+    <link rel="stylesheet" href="../styles/pages.css">
+    <link rel="stylesheet" href="../styles/gates.css">
+</head>
+<body>
+    <div class="slot muteSlot SecondaryMute" id="muteButt" style="
+        position: fixed; 
+        top: 20px; 
+        right: 20px; 
+        z-index: 2000; 
+        width: 50px; 
+        height: 50px; 
+        border-radius: 
+        50%;">
+        <span id="mutePic">🔊</span>
+    </div>
+    <div id="clickForMusic" class="musicClick">CLICK ANYWHERE FOR MUSIC :)</div>
+    <div class="bGround"></div>
+    <div id="gateClose" class="gateAnimation" style="display: none;">
+        <div class="gate gateTop"></div>
+        <div class="gate gateBottom"></div>
+        <audio id="boom" src="../pictures/explosion.mp3"></audio>
+    </div>
+    <header>
+        <h1 class="titlus">MY PORTFOLIO</h1>
+    </header>
+    
+     <nav class="navig">
+        <a href="#" onclick="animateExitAndGo(event, '../portfolio.html#bypass')">MAIN PAGE</a>
+        <a href="#" onclick="animateExitAndGo(event, '../portfolio.html#bypass-gallery')">GALLERY</a>
+        <a href="contact.html">CONTACT</a>
+        <a href="about.html">ABOUT</a>
+    </nav>
+
+    <section id="contact" class="contactSection">
+        <div class="contactData">
+            <div>
+                <span class="question">EMAIL:</span>
+                <span class="answer">nurbekbissengali@gmail.com</span>
+            </div>
+            <div>
+                <span class="question">PHONE:</span>
+                <span class="answer">783 596 885</span>
+            </div>
+            <div>
+                <span class="question">WEBSITE:</span>
+                <span class="answer">https://www.youtube.com/@master_cheburek-v9y</span>
+            </div>
+        </div>
+        <h2 class="sectionTitlus">CHALLENGE ME</h2>
+        <form class="contactForm" action="https://formspree.io" method="POST">
+            <input type="text" name="name" placeholder="YOUR NAME" required>
+            <input type="email" name="_replyto" placeholder="YOUR EMAIL" required>
+            <textarea name="message" placeholder="YOUR MESSAGE" required></textarea>
+            <button type="submit">SEND SOUL</button>
+        </form>
+    </section>
+    <audio id="charMusic" src="../pictures/contact.mp3" loop></audio>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const scroll = window.pageYOffset;
+            const bg = document.querySelector('.bGround');
+            if (bg) bg.style.transform = `translateY(-${scroll * 0.3}px)`;
+        });
+    </script>
+    <script src="../script.js"></script>
+</body>
+</html>

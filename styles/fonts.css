@@ -1,0 +1,72 @@
+
+    @font-face {
+        font-family: 'MK3Title';
+        src: url('../pictures/mktitle.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'MK3Secondary';
+        src: url('../pictures/mk3font.ttf') format('truetype');
+    }
+
+    :root {
+        --mk-red: #ff0000;
+        --mk-gold: #ffcc00;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: #000;
+        color: #fff;
+        font-family: 'MK3Secondary', sans-serif;
+        overflow-x: hidden;
+        transition: background-color 0.8s ease;
+    }
+    .clickText {
+        font-size: 3rem;
+        color: #b0b0b0;
+        animation: pulsate 1.5s infinite ease-in-out;
+    }
+    .gate-text, 
+    .clickText, 
+    .titlus,
+    .butt,
+    .wasdText { 
+        font-family: 'MK3Title', sans-serif !important;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-shadow: 
+            1px 1px 0px #000,
+            2px 2px 0px #000,
+            3px 3px 0px #000,
+            4px 4px 0px #000,
+            5px 5px 0px #000,
+            6px 6px 0px #000,
+            7px 7px 0px #000,
+            8px 8px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    html:has(body.scroll-locked),
+    body.scroll-locked {
+        overflow: hidden !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        position: fixed !important;
+        width: 100vw !important;
+        touch-action: none !important;
+    }
+
+    .bGround {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 142.85vh;
+        background-image: url('../pictures/470410-scorpions_lair.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        image-rendering: pixelated; 
+        z-index: -100;
+        will-change: transform; 
+    }
