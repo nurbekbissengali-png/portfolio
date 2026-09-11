@@ -265,7 +265,7 @@ function selectCharacter() {
     if (isLocked || gridIndex === 9) return;
     isLocked = true;
     if (activeSprite) {
-        // ЭТАП 2: Запускается твоя анимация выбора _chosen.gif
+        // ЭТАП 2: Врубается твоя анимация выбора _chosen.gif
         activeSprite.src = `pictures/char_${gridIndex}_chosen.gif`;
         if (lockAnimationTimeout) clearTimeout(lockAnimationTimeout);
         const dynamicDuration = CHAR_ANIMATION_TIMES[gridIndex] || 1200;
@@ -289,17 +289,16 @@ function selectCharacter() {
             document.body.classList.add('scroll-locked');
             if (videoContainer) videoContainer.classList.add('show'); 
             
-            // Достаем видео из памяти, включаем звук и сбрасываем на 0-ю секунду
-            const activeVideo = document.getElementById(`portfolioVideo-${gridIndex}`);
+            // ИСПРАВЛЕНО: Ищем видео по ID 'portfolioVideo', так как оно уже переименовано в updateVideoPreview!
+            const activeVideo = document.getElementById('portfolioVideo');
             if (activeVideo) {
-                activeVideo.muted = isMuted; 
-                activeVideo.currentTime = 0; 
-                activeVideo.play().catch(e => {});
+                activeVideo.muted = isMuted; // ВКЛЮЧАЕМ ЗВУК (применяем глобальный статус звука сайта)
+                activeVideo.currentTime = 0; // Сбрасываем синематик на начало
+                activeVideo.play().catch(e => console.log("Ошибка воспроизведения звука:", e));
             }
         }, videoDelay); 
     }
 }
-
 function unlockSelection() {
     isLocked = false;
     if (lockAnimationTimeout) {
