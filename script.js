@@ -264,9 +264,12 @@ function updateSelectionUI() {
 function selectCharacter() {
     if (isLocked || gridIndex === 9) return;
     isLocked = true;
+    
     if (activeSprite) {
-        // ЭТАП 2: Врубается твоя анимация выбора _chosen.gif
-        activeSprite.src = `pictures/char_${gridIndex}_chosen.gif`;
+        // ИСПРАВЛЕНО: Добавляем ?t= и текущее время, чтобы обмануть кэш браузера.
+        // Это принудительно запускает _chosen.gif С САМОГО ПЕРВОГО КАДРА без зависаний!
+        activeSprite.src = `pictures/char_${gridIndex}_chosen.gif?t=${new Date().getTime()}`;
+        
         if (lockAnimationTimeout) clearTimeout(lockAnimationTimeout);
         const dynamicDuration = CHAR_ANIMATION_TIMES[gridIndex] || 1200;
         
@@ -284,17 +287,22 @@ function selectCharacter() {
         if (plupluSound) plupluSound.play().catch(e => {});
         
         setTimeout(() => {
-            // ЭТАП 3: Экран темнеет, открывается видео на весь экран
             if (darkenbg) darkenbg.classList.add('active');
             document.body.classList.add('scroll-locked');
             if (videoContainer) videoContainer.classList.add('show'); 
             
-            // ИСПРАВЛЕНО: Ищем видео по ID 'portfolioVideo', так как оно уже переименовано в updateVideoPreview!
+            const allVideos = document.querySelectorAll('.portfolio-video');
+            allVideos.forEach(v => {
+                v.classList.remove('active');
+                v.classList.add('hidden');
+                v.pause();
+            });
+
             const activeVideo = document.getElementById('portfolioVideo');
             if (activeVideo) {
-                activeVideo.muted = isMuted; // ВКЛЮЧАЕМ ЗВУК (применяем глобальный статус звука сайта)
-                activeVideo.currentTime = 0; // Сбрасываем синематик на начало
-                activeVideo.play().catch(e => console.log("Ошибка воспроизведения звука:", e));
+                activeVideo.muted = isMuted; 
+                activeVideo.currentTime = 0; 
+                activeVideo.play().catch(e => console.log("Ошибка звука:", e));
             }
         }, videoDelay); 
     }
