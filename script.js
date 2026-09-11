@@ -148,31 +148,22 @@ function fadeMusic(fadeOut = true) {
 
 function updateVideoPreview() {
     if (gridIndex === 9) return; 
-    
-    // 1. Скрываем все видео в контейнере, тушим их и убираем старый ID
     const allVideos = document.querySelectorAll('.portfolio-video');
     allVideos.forEach(v => {
         v.classList.remove('active');
         v.classList.add('hidden');
-        v.removeAttribute('id-active'); // на всякий случай очищаем маркеры
-        v.id = v.getAttribute('data-original-id') || v.id; // возвращаем родной ID обратно в пул
+        v.removeAttribute('id-active');
+        v.id = v.getAttribute('data-original-id') || v.id;
         v.pause();
     });
-
-    // 2. Включаем превью текущего персонажа из сетки
     const currentVideo = document.getElementById(`portfolioVideo-${gridIndex}`);
     if (currentVideo) {
-        // Сохраняем родной ID в кастомный атрибут, если еще не сохранили
         if (!currentVideo.getAttribute('data-original-id')) {
             currentVideo.setAttribute('data-original-id', currentVideo.id);
         }
-        
         currentVideo.classList.remove('hidden');
         currentVideo.classList.add('active');
-        
-        // ВРЕМЕННО ПРИСВАЕВАЕМ СТАРЫЙ ID, ЧТОБЫ ВЕРНУТЬ CSS СТИЛИ НА МЕСТО
         currentVideo.id = 'portfolioVideo'; 
-        
         currentVideo.muted = true; 
         currentVideo.play().catch(e => {});
     }
@@ -265,17 +256,14 @@ function selectCharacter() {
     if (isLocked || gridIndex === 9) return;
     isLocked = true;
     if (activeSprite) {
-        // ЭТАП 2: Врубается твоя анимация выбора _chosen.gif
         activeSprite.src = `pictures/char_${gridIndex}_chosen.gif`;
         if (lockAnimationTimeout) clearTimeout(lockAnimationTimeout);
         const dynamicDuration = CHAR_ANIMATION_TIMES[gridIndex] || 1200;
-        
         lockAnimationTimeout = setTimeout(() => {
             if (isLocked && activeSprite) {
                 activeSprite.src = `pictures/char_${gridIndex}_static.png`;
             }
         }, dynamicDuration); 
-        
         const videoDelay = dynamicDuration + 400;
         fadeMusic(true); 
         const activeSlot = slots[gridIndex];
@@ -284,16 +272,13 @@ function selectCharacter() {
         if (plupluSound) plupluSound.play().catch(e => {});
         
         setTimeout(() => {
-            // ЭТАП 3: Экран темнеет, открывается видео на весь экран
             if (darkenbg) darkenbg.classList.add('active');
             document.body.classList.add('scroll-locked');
             if (videoContainer) videoContainer.classList.add('show'); 
-            
-            // ИСПРАВЛЕНО: Ищем видео по ID 'portfolioVideo', так как оно уже переименовано в updateVideoPreview!
             const activeVideo = document.getElementById('portfolioVideo');
             if (activeVideo) {
-                activeVideo.muted = isMuted; // ВКЛЮЧАЕМ ЗВУК (применяем глобальный статус звука сайта)
-                activeVideo.currentTime = 0; // Сбрасываем синематик на начало
+                activeVideo.muted = isMuted;
+                activeVideo.currentTime = 0;
                 activeVideo.play().catch(e => console.log("Ошибка воспроизведения звука:", e));
             }
         }, videoDelay); 
@@ -317,8 +302,6 @@ function unlockSelection() {
     if (videoInfo) videoInfo.style.display = 'block';
     if (infoHide) infoHide.style.display = 'none';
     document.body.style.backgroundColor = "black";
-    
-    // ИСПРАВЛЕНО: Просто прячем и останавливаем все видео в пуле
     const allVideos = document.querySelectorAll('.portfolio-video');
     allVideos.forEach(v => {
         v.pause();
@@ -326,7 +309,6 @@ function unlockSelection() {
         v.classList.remove('active');
         v.classList.add('hidden');
     });
-    
     if (activeSprite) {
         activeSprite.src = `pictures/char_${gridIndex}_idle.gif`;
     }
@@ -494,8 +476,6 @@ if (galleryContainer) {
             lastScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
             isLocked = true;
             const videoDescElement = document.getElementById('descriptionInChange');
-            
-            // 1. Полностью прячем и останавливаем сетку персонажей
             const allVideos = document.querySelectorAll('.portfolio-video');
             allVideos.forEach(v => { 
                 v.classList.remove('active'); 
@@ -505,21 +485,15 @@ if (galleryContainer) {
                     v.id = v.getAttribute('data-original-id');
                 }
             });
-
-            // 2. Достаем цифру из имени файла (например, из "pictures/gallery2.mp4" берем 2)
             const fileNumber = projectData.videoSrc.match(/\d+/); 
             const targetGalleryVideo = document.getElementById(`galleryVideo-${fileNumber}`);
             
             if (targetGalleryVideo) {
-                // Бэкапим родной ID, чтобы верстка не ломалась при закрытии окна
                 if (!targetGalleryVideo.getAttribute('data-original-id')) {
                     targetGalleryVideo.setAttribute('data-original-id', targetGalleryVideo.id);
                 }
-
                 targetGalleryVideo.classList.remove('hidden');
                 targetGalleryVideo.classList.add('active');
-                
-                // Переименовываем в 'portfolioVideo', чтобы подсосать твои оригинальные CSS размеры
                 targetGalleryVideo.id = 'portfolioVideo'; 
                 
                 targetGalleryVideo.muted = isMuted; 
@@ -687,18 +661,14 @@ if (document.readyState === 'loading') {
 }
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('.contactForm');
-
     if (form) {
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
-            
             const button = form.querySelector('button');
             const originalButtonText = button.textContent;
             button.textContent = 'SENDING...';
             button.disabled = true;
-
             const formData = new FormData(form);
-
             try {
                 const response = await fetch(form.action, {
                     method: form.method,
@@ -707,7 +677,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Accept': 'application/json'
                     }
                 });
-
                 if (response.ok) {
                     alert('SOUL SENT!');
                     form.reset();
