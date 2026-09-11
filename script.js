@@ -633,3 +633,43 @@ if (document.readyState === 'loading') {
     checkBypassState();
     initSubpageAudioEngine();
 }
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('.contactForm');
+
+    if (form) {
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Запрещаем перезагрузку страницы
+            
+            const button = form.querySelector('button');
+            const originalButtonText = button.textContent;
+            button.textContent = 'SENDING...';
+            button.disabled = true;
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    alert('Ваше сообщение (и душа) успешно отправлены!');
+                    form.reset(); // Очищаем поля формы
+                } else {
+                    const data = await response.json();
+                    alert(data.errors ? data.errors.map(e => e.message).join(', ') : 'Ошибка отправки.');
+                }
+            } catch (error) {
+                alert('Произошла сетевая ошибка. Попробуйте позже.');
+            } finally {
+                // Возвращаем кнопку в исходное состояние
+                button.textContent = originalButtonText;
+                button.disabled = false;
+            }
+        });
+    }
+});
