@@ -266,7 +266,7 @@ function selectCharacter() {
     isLocked = true;
     if (activeSprite) {
         // ЭТАП 2: Врубается твоя анимация выбора _chosen.gif
-        activeSprite.src = `pictures/char_${gridIndex}_chosen.gif?t=${Date.now()}`;
+        activeSprite.src = `pictures/char_${gridIndex}_chosen.gif`;
         if (lockAnimationTimeout) clearTimeout(lockAnimationTimeout);
         const dynamicDuration = CHAR_ANIMATION_TIMES[gridIndex] || 1200;
         
@@ -328,7 +328,7 @@ function unlockSelection() {
     });
     
     if (activeSprite) {
-        activeSprite.src = `pictures/char_${gridIndex}_idle.gif?t=${Date.now()}`;
+        activeSprite.src = `pictures/char_${gridIndex}_idle.gif`;
     }
     window.scrollTo({
         top: lastScrollPosition,
