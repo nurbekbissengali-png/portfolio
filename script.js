@@ -495,7 +495,7 @@ if (galleryContainer) {
             isLocked = true;
             const videoDescElement = document.getElementById('descriptionInChange');
             
-            // 1. Гасим основной пул персонажей и возвращаем им родные ID
+            // 1. Полностью гасим пул и возвращаем родные ID персонажам
             const allVideos = document.querySelectorAll('.portfolio-video');
             allVideos.forEach(v => { 
                 v.classList.remove('active'); 
@@ -506,12 +506,12 @@ if (galleryContainer) {
                 }
             });
 
-            // 2. ИСПРАВЛЕНО: Вытаскиваем имя файла из videoSrc (например, "pictures/gallery2.mp4" -> "gallery2")
-            const fileKey = projectData.videoSrc.replace('pictures/', '').replace('.mp4', '');
-            const targetGalleryVideo = document.getElementById(`galleryVideo-${fileKey}`);
+            // 2. ИСПРАВЛЕНО: Вытаскиваем чистую цифру из имени файла mp4 (например, "pictures/gallery2.mp4" -> "2")
+            const fileNumber = projectData.videoSrc.match(/\d+/)[0]; 
+            const targetGalleryVideo = document.getElementById(`galleryVideo-${fileNumber}`);
             
             if (targetGalleryVideo) {
-                // Бэкапим оригинальный ID
+                // Бэкапим родной ID перед подменой стилей
                 if (!targetGalleryVideo.getAttribute('data-original-id')) {
                     targetGalleryVideo.setAttribute('data-original-id', targetGalleryVideo.id);
                 }
@@ -519,7 +519,7 @@ if (galleryContainer) {
                 targetGalleryVideo.classList.remove('hidden');
                 targetGalleryVideo.classList.add('active');
                 
-                // Переименовываем в 'portfolioVideo' для подхвата оригинальных CSS размеров
+                // Даем ID 'portfolioVideo' для подхвата оригинальных CSS размеров
                 targetGalleryVideo.id = 'portfolioVideo'; 
                 
                 targetGalleryVideo.muted = isMuted; 
