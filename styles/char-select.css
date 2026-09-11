@@ -1,3 +1,10 @@
+.portfolio-video.hidden {
+    display: none !important;
+}
+.portfolio-video.active {
+    display: block !important;
+}
+
 .kombatZone { 
     display: flex; 
     height: 80vh; 

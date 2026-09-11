@@ -148,12 +148,22 @@ function fadeMusic(fadeOut = true) {
 
 function updateVideoPreview() {
     if (gridIndex === 9) return; 
-    video = document.getElementById('portfolioVideo');
-    if (video) {
-        video.src = `pictures/video${gridIndex}.mp4`;
-        video.load();
-        video.muted = true; 
-        video.play().catch(e => {});
+    
+    // 1. Мгновенно скрываем вообще все видео в контейнере и тушим их
+    const allVideos = document.querySelectorAll('.portfolio-video');
+    allVideos.forEach(v => {
+        v.classList.remove('active');
+        v.classList.add('hidden');
+        v.pause();
+    });
+
+    // 2. Включаем превью текущего персонажа из сетки (без звука)
+    const currentVideo = document.getElementById(`portfolioVideo-${gridIndex}`);
+    if (currentVideo) {
+        currentVideo.classList.remove('hidden');
+        currentVideo.classList.add('active');
+        currentVideo.muted = true; 
+        currentVideo.play().catch(e => {});
     }
 }
 
@@ -244,29 +254,36 @@ function selectCharacter() {
     if (isLocked || gridIndex === 9) return;
     isLocked = true;
     if (activeSprite) {
+        // ЭТАП 2: Запускается твоя анимация выбора _chosen.gif
         activeSprite.src = `pictures/char_${gridIndex}_chosen.gif`;
         if (lockAnimationTimeout) clearTimeout(lockAnimationTimeout);
         const dynamicDuration = CHAR_ANIMATION_TIMES[gridIndex] || 1200;
+        
         lockAnimationTimeout = setTimeout(() => {
             if (isLocked && activeSprite) {
                 activeSprite.src = `pictures/char_${gridIndex}_static.png`;
             }
         }, dynamicDuration); 
+        
         const videoDelay = dynamicDuration + 400;
         fadeMusic(true); 
         const activeSlot = slots[gridIndex];
         if (activeSlot) activeSlot.classList.add('locked'); 
         if (grid) grid.classList.add('glowing');      
         if (plupluSound) plupluSound.play().catch(e => {});
+        
         setTimeout(() => {
+            // ЭТАП 3: Экран темнеет, открывается видео на весь экран
             if (darkenbg) darkenbg.classList.add('active');
             document.body.classList.add('scroll-locked');
             if (videoContainer) videoContainer.classList.add('show'); 
-            video = document.getElementById('portfolioVideo');
-            if (video) {
-                video.muted = isMuted; 
-                video.currentTime = 0; 
-                video.play().catch(e => {});
+            
+            // Достаем видео из памяти, включаем звук и сбрасываем на 0-ю секунду
+            const activeVideo = document.getElementById(`portfolioVideo-${gridIndex}`);
+            if (activeVideo) {
+                activeVideo.muted = isMuted; 
+                activeVideo.currentTime = 0; 
+                activeVideo.play().catch(e => {});
             }
         }, videoDelay); 
     }
@@ -290,15 +307,16 @@ function unlockSelection() {
     if (videoInfo) videoInfo.style.display = 'block';
     if (infoHide) infoHide.style.display = 'none';
     document.body.style.backgroundColor = "black";
-    const innerContainer = document.getElementById('videoContainer');
-    if (innerContainer) {
-        innerContainer.innerHTML = `<video id="portfolioVideo" loop playsinline src="pictures/video0.mp4"></video>`;
-    }
-    video = document.getElementById('portfolioVideo');
-    if (video) {
-        video.pause();
-        video.muted = true;
-    }
+    
+    // ИСПРАВЛЕНО: Просто прячем и останавливаем все видео в пуле
+    const allVideos = document.querySelectorAll('.portfolio-video');
+    allVideos.forEach(v => {
+        v.pause();
+        v.muted = true;
+        v.classList.remove('active');
+        v.classList.add('hidden');
+    });
+    
     if (activeSprite) {
         activeSprite.src = `pictures/char_${gridIndex}_idle.gif`;
     }
@@ -457,33 +475,41 @@ if (galleryContainer) {
             thumbVideo.play().catch(e => {}); 
         }
         item.querySelector('.galleryVideoPreviewBox').addEventListener('click', () => {
-        const projectData = PORTFOLIO_PROJECTS[item.getAttribute('data-gallery-id')];
-        if (projectData.isYouTube) {
-            window.open(projectData.videoSrc, '_blank'); 
-            return; 
-        }
-        if (isLocked) return; 
-        lastScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-        isLocked = true;
-        const videoDescElement = document.getElementById('descriptionInChange');
-        const innerContainer = document.getElementById('videoContainer');
-        if (!innerContainer) return;
-        innerContainer.innerHTML = `<video id="portfolioVideo" loop playsinline src="${projectData.videoSrc}"></video>`;
-        window.video = document.getElementById('portfolioVideo');
-        if (videoDescElement) videoDescElement.innerText = projectData.desc;
-        if (window.video) {
-            window.video.muted = isMuted;
-            window.video.currentTime = 0;
-        }
-        fadeMusic(true);
-        if (plupluSound) plupluSound.play().catch(e => {});
-        if (darkenbg) darkenbg.classList.add('active');
-        document.body.classList.add('scroll-locked');
-        if (videoContainer) videoContainer.classList.add('show');
-        if (window.video) {
-            window.video.play().catch(e => {});
-        }
-    });
+            const projectData = PORTFOLIO_PROJECTS[item.getAttribute('data-gallery-id')];
+            if (projectData.isYouTube) {
+                window.open(projectData.videoSrc, '_blank'); 
+                return; 
+            }
+            if (isLocked) return; 
+            lastScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            isLocked = true;
+            const videoDescElement = document.getElementById('descriptionInChange');
+            
+            // Прячем всё, что крутилось на сетке персонажей
+            const allVideos = document.querySelectorAll('.portfolio-video');
+            allVideos.forEach(v => { v.classList.remove('active'); v.classList.add('hidden'); v.pause(); });
+
+            // Вычисляем id видео на основе индекса (индексы с нуля, поэтому +1)
+            const galleryId = parseInt(item.getAttribute('data-gallery-id')) + 1;
+            const targetGalleryVideo = document.getElementById(`galleryVideo-${galleryId}`);
+            
+            if (targetGalleryVideo) {
+                targetGalleryVideo.classList.remove('hidden');
+                targetGalleryVideo.classList.add('active');
+                targetGalleryVideo.muted = isMuted;
+                targetGalleryVideo.currentTime = 0;
+            }
+
+            if (videoDescElement) videoDescElement.innerText = projectData.desc;
+            fadeMusic(true);
+            if (plupluSound) plupluSound.play().catch(e => {});
+            if (darkenbg) darkenbg.classList.add('active');
+            document.body.classList.add('scroll-locked');
+            if (videoContainer) videoContainer.classList.add('show');
+            if (targetGalleryVideo) {
+                targetGalleryVideo.play().catch(e => {});
+            }
+        });
     });
 }
 
