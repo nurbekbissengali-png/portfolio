@@ -638,7 +638,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (form) {
         form.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Запрещаем перезагрузку страницы
+            event.preventDefault();
             
             const button = form.querySelector('button');
             const originalButtonText = button.textContent;
@@ -657,16 +657,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (response.ok) {
-                    alert('Ваше сообщение (и душа) успешно отправлены!');
-                    form.reset(); // Очищаем поля формы
+                    alert('SOUL SENT!');
+                    form.reset();
                 } else {
                     const data = await response.json();
-                    alert(data.errors ? data.errors.map(e => e.message).join(', ') : 'Ошибка отправки.');
+                    alert(data.errors ? data.errors.map(e => e.message).join(', ') : 'Sending error');
                 }
             } catch (error) {
-                alert('Произошла сетевая ошибка. Попробуйте позже.');
+                alert('Network issue. Try again later.');
             } finally {
-                // Возвращаем кнопку в исходное состояние
                 button.textContent = originalButtonText;
                 button.disabled = false;
             }
