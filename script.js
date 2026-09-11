@@ -149,19 +149,30 @@ function fadeMusic(fadeOut = true) {
 function updateVideoPreview() {
     if (gridIndex === 9) return; 
     
-    // 1. Мгновенно скрываем вообще все видео в контейнере и тушим их
+    // 1. Скрываем все видео в контейнере, тушим их и убираем старый ID
     const allVideos = document.querySelectorAll('.portfolio-video');
     allVideos.forEach(v => {
         v.classList.remove('active');
         v.classList.add('hidden');
+        v.removeAttribute('id-active'); // на всякий случай очищаем маркеры
+        v.id = v.getAttribute('data-original-id') || v.id; // возвращаем родной ID обратно в пул
         v.pause();
     });
 
-    // 2. Включаем превью текущего персонажа из сетки (без звука)
+    // 2. Включаем превью текущего персонажа из сетки
     const currentVideo = document.getElementById(`portfolioVideo-${gridIndex}`);
     if (currentVideo) {
+        // Сохраняем родной ID в кастомный атрибут, если еще не сохранили
+        if (!currentVideo.getAttribute('data-original-id')) {
+            currentVideo.setAttribute('data-original-id', currentVideo.id);
+        }
+        
         currentVideo.classList.remove('hidden');
         currentVideo.classList.add('active');
+        
+        // ВРЕМЕННО ПРИСВАЕВАЕМ СТАРЫЙ ID, ЧТОБЫ ВЕРНУТЬ CSS СТИЛИ НА МЕСТО
+        currentVideo.id = 'portfolioVideo'; 
+        
         currentVideo.muted = true; 
         currentVideo.play().catch(e => {});
     }
