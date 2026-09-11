@@ -495,18 +495,33 @@ if (galleryContainer) {
             isLocked = true;
             const videoDescElement = document.getElementById('descriptionInChange');
             
-            // Прячем всё, что крутилось на сетке персонажей
+            // 1. Тушим весь пул и сбрасываем ID
             const allVideos = document.querySelectorAll('.portfolio-video');
-            allVideos.forEach(v => { v.classList.remove('active'); v.classList.add('hidden'); v.pause(); });
+            allVideos.forEach(v => { 
+                v.classList.remove('active'); 
+                v.classList.add('hidden'); 
+                v.pause(); 
+                if (v.getAttribute('data-original-id')) {
+                    v.id = v.getAttribute('data-original-id');
+                }
+            });
 
-            // Вычисляем id видео на основе индекса (индексы с нуля, поэтому +1)
+            // 2. ИСПРАВЛЕНО: Берём чистый индекс из дата-атрибута (0, 1, 2, 3)
             const galleryId = item.getAttribute('data-gallery-id');
             const targetGalleryVideo = document.getElementById(`galleryVideo-${galleryId}`);
             
             if (targetGalleryVideo) {
+                if (!targetGalleryVideo.getAttribute('data-original-id')) {
+                    targetGalleryVideo.setAttribute('data-original-id', targetGalleryVideo.id);
+                }
+
                 targetGalleryVideo.classList.remove('hidden');
                 targetGalleryVideo.classList.add('active');
-                targetGalleryVideo.muted = isMuted;
+                
+                // Временно даем ID 'portfolioVideo' для подхвата CSS стилей размеров
+                targetGalleryVideo.id = 'portfolioVideo'; 
+                
+                targetGalleryVideo.muted = isMuted; 
                 targetGalleryVideo.currentTime = 0;
             }
 
