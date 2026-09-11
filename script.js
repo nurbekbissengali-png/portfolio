@@ -495,7 +495,7 @@ if (galleryContainer) {
             isLocked = true;
             const videoDescElement = document.getElementById('descriptionInChange');
             
-            // 1. Тушим весь пул и сбрасываем ID
+            // 1. Гасим основной пул персонажей и возвращаем им родные ID
             const allVideos = document.querySelectorAll('.portfolio-video');
             allVideos.forEach(v => { 
                 v.classList.remove('active'); 
@@ -506,11 +506,12 @@ if (galleryContainer) {
                 }
             });
 
-            // 2. ИСПРАВЛЕНО: Берём чистый индекс из дата-атрибута (0, 1, 2, 3)
-            const galleryId = item.getAttribute('data-gallery-id');
-            const targetGalleryVideo = document.getElementById(`galleryVideo-${galleryId}`);
+            // 2. ИСПРАВЛЕНО: Вытаскиваем имя файла из videoSrc (например, "pictures/gallery2.mp4" -> "gallery2")
+            const fileKey = projectData.videoSrc.replace('pictures/', '').replace('.mp4', '');
+            const targetGalleryVideo = document.getElementById(`galleryVideo-${fileKey}`);
             
             if (targetGalleryVideo) {
+                // Бэкапим оригинальный ID
                 if (!targetGalleryVideo.getAttribute('data-original-id')) {
                     targetGalleryVideo.setAttribute('data-original-id', targetGalleryVideo.id);
                 }
@@ -518,7 +519,7 @@ if (galleryContainer) {
                 targetGalleryVideo.classList.remove('hidden');
                 targetGalleryVideo.classList.add('active');
                 
-                // Временно даем ID 'portfolioVideo' для подхвата CSS стилей размеров
+                // Переименовываем в 'portfolioVideo' для подхвата оригинальных CSS размеров
                 targetGalleryVideo.id = 'portfolioVideo'; 
                 
                 targetGalleryVideo.muted = isMuted; 
