@@ -500,7 +500,7 @@ if (galleryContainer) {
             allVideos.forEach(v => { v.classList.remove('active'); v.classList.add('hidden'); v.pause(); });
 
             // Вычисляем id видео на основе индекса (индексы с нуля, поэтому +1)
-            const galleryId = parseInt(item.getAttribute('data-gallery-id')) + 1;
+            const galleryId = item.getAttribute('data-gallery-id');
             const targetGalleryVideo = document.getElementById(`galleryVideo-${galleryId}`);
             
             if (targetGalleryVideo) {
